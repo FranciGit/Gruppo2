@@ -1,6 +1,7 @@
 package it.gruppo2.ShopOnline.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Utente {
 	
@@ -10,8 +11,9 @@ public class Utente {
 	private String username;
 	private String password;
 	private String indirizzo;
-	private ArrayList<Acquisto> listaOrdini;
-	private ArrayList<Acquisto> listaAcquisti;
+	
+	//private ArrayList<Acquisto> listaOrdini = new ArrayList<>();
+	//private List<Acquisto> listaAcquisti = new ArrayList<>();
 	
 	public int getIdUtente() {
 		return idUtente;
@@ -49,23 +51,23 @@ public class Utente {
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
 	}
-	public ArrayList<Acquisto> getListaOrdini() {
+	/*public ArrayList<Acquisto> getListaOrdini() {
 		return listaOrdini;
 	}
 	public void setListaOrdini(ArrayList<Acquisto> listaOrdini) {
 		this.listaOrdini = listaOrdini;
 	}
-	public ArrayList<Acquisto> getListaAcquisti() {
+	public List<Acquisto> getListaAcquisti() {
 		return listaAcquisti;
 	}
-	public void setListaAcquisti(ArrayList<Acquisto> listaAcquisti) {
-		this.listaAcquisti = listaAcquisti;
-	}
+	public void setListaAcquisti(List<Acquisto> listaAcquisti) {
+		this.listaAcquisti = listaAcquisti; 
+	}*/
 	@Override
 	public String toString() {
-		return "Utente [idUtente=" + idUtente + ", nome=" + nome + ", cognome=" + cognome + ", username=" + username
-				+ ", password=" + password + ", indirizzo=" + indirizzo + ", listaOrdini=" + listaOrdini
-				+ ", listaAcquisti=" + listaAcquisti + "]";
+		return "Utente [idUtente=" + idUtente + ", nome=" + nome
+				+ ", cognome=" + cognome + ", username=" + username
+				+ ", password=" + password + ", indirizzo=" + indirizzo + "]";
 	}
 	
 	

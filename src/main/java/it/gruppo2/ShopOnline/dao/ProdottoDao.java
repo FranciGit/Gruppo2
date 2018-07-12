@@ -7,15 +7,15 @@ import it.gruppo2.ShopOnline.model.Prodotto;
 
 public interface ProdottoDao {
 	
-	public Prodotto getProdottoById(int id_prodotto);
+	public Prodotto getProdottoById(int idProdotto);
 	
 	public List<Prodotto> getAllProdotti();
 	
-	public void getAllProdottiDisponibili(boolean disponibile, int id_prodotto);
+	public List<Prodotto> getProdottiDisponibili(boolean disponibile, int idProdotto);
 	
-	public List<Prodotto> getProdottiInOfferta(boolean offerta, int id_prodotto);
+	public List<Prodotto> getProdottiInOfferta(boolean offerta, int idProdotto);
 	
-	public List<Prodotto> getProdottiPerCategoria(Categoria categoria, int id_prodotto);
+	public List<Prodotto> getProdottiByCategoria(Categoria categoria);
 	
 	public void close();
 

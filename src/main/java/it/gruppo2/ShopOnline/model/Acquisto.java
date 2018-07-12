@@ -1,19 +1,17 @@
 package it.gruppo2.ShopOnline.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Acquisto {
 	
 	private int idAcquisto;
 	private TipoSpedizione tipoSpedizione;
-	private LocalDateTime dataInizio;
-	private LocalDateTime dataFine;
+	private LocalDate dataInizio;
+	private LocalDate dataFine;
 	private double prezzoDiSpedizione;
 	private int quantitaAcquistata;
 	private int idUtente;
 	private int idProdotto;
-	
-	private double prezzoAcquisto; //aggiunta in più
 	
 	public int getIdAcquisto() {
 		return idAcquisto;
@@ -27,16 +25,16 @@ public class Acquisto {
 	public void setTipoSpedizione(TipoSpedizione tipoSpedizione) {
 		this.tipoSpedizione = tipoSpedizione;
 	}
-	public LocalDateTime getDataInizio() {
+	public LocalDate getDataInizio() {
 		return dataInizio;
 	}
-	public void setDataInizio(LocalDateTime dataInizio) {
+	public void setDataInizio(LocalDate dataInizio) {
 		this.dataInizio = dataInizio;
 	}
-	public LocalDateTime getDataFine() {
+	public LocalDate getDataFine() {
 		return dataFine;
 	}
-	public void setDataFine(LocalDateTime dataFine) {
+	public void setDataFine(LocalDate dataFine) {
 		this.dataFine = dataFine;
 	}
 	public double getPrezzoDiSpedizione() {
@@ -76,10 +74,9 @@ public class Acquisto {
 				+ "]";
 	}
 	
-	public void calcolaPrezzo(double prezzo, double prezzoDiSpedizione) {
-		double prezzoTotaleProdotto = prezzo + prezzoDiSpedizione;
-		prezzoTotaleProdotto += tipoSpedizione.getPrezzoDiSpedizione(); //funziona con += ???
-		this.prezzoAcquisto = prezzoTotaleProdotto;		
+	public double calcolaPrezzo(double prezzoProdotto, double prezzoDiSpedizione) {
+		double prezzoTotaleProdotto = prezzoProdotto + prezzoDiSpedizione;
+		return prezzoTotaleProdotto;
 	}
 
 }

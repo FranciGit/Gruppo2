@@ -137,6 +137,32 @@ public class ProdottoDaoImpl implements ProdottoDao{
 		}
 		return listaProdottiDisponibili;
 	}
+	
+	@Override
+	public void updateDisponibile(boolean disponibile, int idProdotto) {
+		String query = "update prodotto set disponibile = ?"
+				+ " where id_prodotto = ?";
+		try {
+			prepared = connection.prepareStatement(query);
+			if (disponibile) {
+				prepared.setInt(1, 1);
+			} else {
+				prepared.setInt(1, 0);
+			}
+			prepared.setInt(2, idProdotto);
+			prepared.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (prepared != null) {
+				try {
+					prepared.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	@Override
 	public List<Prodotto> getProdottiInOfferta(boolean offerta, int idProdotto) {

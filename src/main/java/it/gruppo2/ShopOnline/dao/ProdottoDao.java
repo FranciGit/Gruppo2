@@ -13,6 +13,8 @@ public interface ProdottoDao {
 	
 	public List<Prodotto> getProdottiDisponibili(boolean disponibile, int idProdotto);
 	
+	public void updateDisponibile(boolean disponibile, int idProdotto);
+	
 	public List<Prodotto> getProdottiInOfferta(boolean offerta, int idProdotto);
 	
 	public List<Prodotto> getProdottiByCategoria(Categoria categoria);

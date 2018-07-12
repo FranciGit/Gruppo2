@@ -1,5 +1,7 @@
 package it.gruppo2.ShopOnline.controller;
 
-public class Logout {
+import javax.servlet.http.HttpServlet;
+
+public class Logout extends HttpServlet {
 
 }

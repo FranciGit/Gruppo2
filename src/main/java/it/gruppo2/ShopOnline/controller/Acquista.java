@@ -1,5 +1,7 @@
 package it.gruppo2.ShopOnline.controller;
 
-public class Acquista {
+import javax.servlet.http.HttpServlet;
+
+public class Acquista extends HttpServlet {
 
 }

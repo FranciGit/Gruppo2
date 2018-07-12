@@ -99,12 +99,6 @@ public class AcquistoDaoImpl implements AcquistoDao {
 	}
 
 	@Override
-	public List<Acquisto> getAllOrdini(int idutente, int idProdotto) {
-		
-		return null;
-	}
-
-	@Override
 	public void close() {
 		if (connection != null) {
 			try {

@@ -1,0 +1,18 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>SHOOOOOP</display-name>
+  
+  <!--  REGISTRAZIONE -->
+  <servlet>
+  <servlet-name>Registrazione</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.Registrazione</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>Registrazione</servlet-name>
+  <url-pattern>/registrazione</url-pattern>
+  </servlet-mapping>
+  
+</web-app>

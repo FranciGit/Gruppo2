@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import it.gruppo2.ShopOnline.dao.UtenteDaoImpl;
 import it.gruppo2.ShopOnline.model.Utente;
+import it.gruppo2.ShopOnline.utilities.CostantiConnessione;
 
 public class Registrazione extends HttpServlet {
 	
@@ -29,7 +30,7 @@ public class Registrazione extends HttpServlet {
 		utente.setPassword(password);
 		utente.setIndirizzo(indirizzo);
 		
-		System.out.println(utente);		
+		System.out.println(utente);
 		
 		//implemento il Dao e inserisco l'utente nel db
 		UtenteDaoImpl utenteService = new UtenteDaoImpl();

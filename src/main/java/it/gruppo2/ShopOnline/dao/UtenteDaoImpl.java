@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 import it.gruppo2.ShopOnline.model.Utente;
+import it.gruppo2.ShopOnline.utilities.DBUtilityConnection;
 
 public class UtenteDaoImpl implements UtenteDao {
 	
@@ -14,6 +16,9 @@ public class UtenteDaoImpl implements UtenteDao {
 	private PreparedStatement prepared;
 	private Statement statement;
 	
+	public UtenteDaoImpl(){
+		connection = DBUtilityConnection.getConnection();
+	}
 
 	public void insertUtente(Utente utente) {
 		String query = "insert into utente values("
@@ -57,9 +62,6 @@ public class UtenteDaoImpl implements UtenteDao {
 				utente.setUsername(username);
 				utente.setPassword(password);
 				utente.setIndirizzo(resultSet.getString(6));
-				// posso già settare come username e password quelli
-				// In entrata (la query deve selezionare proprio username
-				// e password)
 
 			}
 		} catch (SQLException e) {

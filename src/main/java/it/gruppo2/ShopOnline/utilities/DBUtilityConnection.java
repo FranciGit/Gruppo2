@@ -10,7 +10,6 @@ public class DBUtilityConnection {
 		Connection connection = null;
 		try {
 			Class.forName(CostantiConnessione.DB_DRIVER);
-
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -22,5 +21,4 @@ public class DBUtilityConnection {
 		}
 		return connection;
 	}
-
 }

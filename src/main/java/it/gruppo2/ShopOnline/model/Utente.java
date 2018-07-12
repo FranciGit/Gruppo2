@@ -12,8 +12,11 @@ public class Utente {
 	private String password;
 	private String indirizzo;
 	
-	//private ArrayList<Acquisto> listaOrdini = new ArrayList<>();
 	//private List<Acquisto> listaAcquisti = new ArrayList<>();
+	//lista di acquisti in corso = ordinati e consegnati
+	
+	//private ArrayList<Acquisto> listaOrdini = new ArrayList<>();
+	//lista di acquisti passati = prodotti ordinati ma NON consegnati
 	
 	public int getIdUtente() {
 		return idUtente;

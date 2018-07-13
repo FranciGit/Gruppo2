@@ -17,7 +17,7 @@ function validazione() {
 function validazioneLogin() {
 	var username = document.getElementById('username').value;
 	var password = document.getElementById('password').value;
-	console.log(nome + " - " + username + " - " + password);
+	console.log(username + " - " + password);
 	if (username != '' & password != '') {
 		return true;
 	} else {

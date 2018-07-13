@@ -1,8 +1,5 @@
 package it.gruppo2.ShopOnline.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Utente {
 	
 	private int idUtente;
@@ -54,18 +51,7 @@ public class Utente {
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
 	}
-	/*public ArrayList<Acquisto> getListaOrdini() {
-		return listaOrdini;
-	}
-	public void setListaOrdini(ArrayList<Acquisto> listaOrdini) {
-		this.listaOrdini = listaOrdini;
-	}
-	public List<Acquisto> getListaAcquisti() {
-		return listaAcquisti;
-	}
-	public void setListaAcquisti(List<Acquisto> listaAcquisti) {
-		this.listaAcquisti = listaAcquisti; 
-	}*/
+	
 	@Override
 	public String toString() {
 		return "Utente [idUtente=" + idUtente + ", nome=" + nome

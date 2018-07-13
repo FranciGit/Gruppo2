@@ -6,6 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login</title>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/stile.css">
+<script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -27,7 +31,7 @@
 <li><a href="registrazione.jsp">Registrazione</a></li>
 <li><a href="login.jsp">Login</a></li>
 <% } else { %>
-<li><a href="logout.jsp">Logout</a></li>
+<li><a href="logout">Logout</a></li>
 <li><a href="listaAcquisti">Lista Acquisti</a></li>
 <li><a href="listaOrdini">Lista Ordini</a></li>
 <% } %>
@@ -76,8 +80,8 @@ value="<%=username %>"
 <div class="form-group">
 <span class="col-md-4"></span>
 <div class="col-md-5">
-<input type="submit" value="Login" class="btn btn-primary">
-<input type="reset" vale="Ripristina" class="btn btn-warning"
+<input type="submit" value="Login" class="btn btn-primary" >
+<input type="reset" value="Ripristina" class="btn btn-warning"
 style="margin-left:2%">
 </div>
 <span class="col-md-3"></span>
@@ -91,7 +95,7 @@ style="margin-left:2%">
 <span class="col-md-4"></span>
 <div class="col-md-5">
 <p>Non sei ancora registrato?</p>
-<p>Cicca <a href="login.jsp">qui</a> per la registrazione</p>
+<p>Cicca <a href="registrazione.jsp">qui</a> per la registrazione</p>
 </div>
 <span class="col-md-3"></span>
 </div>

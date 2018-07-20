@@ -33,15 +33,16 @@ public class ProdottoDaoImpl implements ProdottoDao{
 			rs = prepared.executeQuery();
 			if (rs.next()) {
 				prodotto = new Prodotto();
-				prodotto.setNome(rs.getString(1));
-				Categoria categoria = Categoria.valueOf(rs.getString(2));
+				prodotto.setIdProdotto(rs.getInt(1));
+				prodotto.setNome(rs.getString(2));
+				Categoria categoria = Categoria.valueOf(rs.getString(3));
 				prodotto.setCategoria(categoria);
-				prodotto.setMarca(rs.getString(3));
-				prodotto.setPrezzo(rs.getDouble(4));
-				prodotto.setOfferta(rs.getBoolean(5));
-				prodotto.setSconto(rs.getInt(6));
-				prodotto.setQuantitaDisponibile(rs.getInt(7));
-				prodotto.setImmagine(rs.getString(8));
+				prodotto.setMarca(rs.getString(4));
+				prodotto.setPrezzo(rs.getDouble(5));
+				prodotto.setOfferta(rs.getBoolean(6));
+				prodotto.setSconto(rs.getInt(7));
+				prodotto.setQuantitaDisponibile(rs.getInt(8));
+				prodotto.setImmagine(rs.getString(9));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,7 +60,8 @@ public class ProdottoDaoImpl implements ProdottoDao{
 		}
 		return prodotto;
 	}
-
+	
+	
 	@Override
 	public List<Prodotto> getAllProdotti() {
 		List<Prodotto> listaProdotti = new ArrayList<>();
@@ -99,56 +101,14 @@ public class ProdottoDaoImpl implements ProdottoDao{
 		return listaProdotti;
 	}
 
-	@Override
-	public List<Prodotto> getProdottiDisponibili(boolean disponibile, int idProdotto) {
-		List<Prodotto> listaProdottiDisponibili = new ArrayList<>();
-		String query = "select * from prodotto where quantita_disponibile <> 0;";
-		ResultSet resultSet = null;
-		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(query);
-			while (resultSet.next()) {
-				Prodotto prodotto = new Prodotto();
-				prodotto.setIdProdotto(resultSet.getInt(1));
-				prodotto.setNome(resultSet.getString(2));
-				Categoria categoria = Categoria.valueOf(resultSet.getString(3));
-				prodotto.setCategoria(categoria);
-				prodotto.setMarca(resultSet.getString(4));
-				prodotto.setPrezzo(resultSet.getDouble(5));
-				prodotto.setOfferta(resultSet.getBoolean(6));
-				prodotto.setSconto(resultSet.getInt(7));
-				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
-				prodotto.setImmagine(resultSet.getString(9));
-				listaProdottiDisponibili.add(prodotto);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return listaProdottiDisponibili;
-	}
 	
 	@Override
-	public void updateDisponibile(boolean disponibile, int idProdotto) {
-		String query = "update prodotto set disponibile = ?"
+	public void updateQuantita(int quantitaDisponibile, int idProdotto) {
+		String query = "update prodotto set quantita_disponibile = ?"
 				+ " where id_prodotto = ?";
 		try {
 			prepared = connection.prepareStatement(query);
-			if (disponibile) {
-				prepared.setInt(1, 1);
-			} else {
-				prepared.setInt(1, 0);
-			}
+			prepared.setInt(1, quantitaDisponibile);
 			prepared.setInt(2, idProdotto);
 			prepared.executeQuery();
 		} catch (SQLException e) {
@@ -162,12 +122,13 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				}
 			}
 		}
-	}
+	}	
 
 	@Override
-	public List<Prodotto> getProdottiInOfferta(boolean offerta, int idProdotto) {
+	public List<Prodotto> getProdottiInOfferta() {
 		List<Prodotto> listaProdottiInOfferta = new ArrayList<>();
-		String query = "select * from prodotto where offerta = 1";
+		String query = "select * from prodotto where offerta = 1"
+				+ " and quantita_disponibile > 0";
 		ResultSet resultSet = null;
 		try {
 			statement = connection.createStatement();
@@ -206,7 +167,8 @@ public class ProdottoDaoImpl implements ProdottoDao{
 	@Override
 	public List<Prodotto> getProdottiByCategoria(Categoria categoria) {
 		List<Prodotto> listaProdottiPerCategoria = new ArrayList<>();
-		String query = "select * from prodotto where categoria = ?";
+		String query = "select * from prodotto where categoria = ?"
+				+ " and quantita_disponibile > 0";
 		ResultSet resultSet = null;
 		try {
 			prepared = connection.prepareStatement(query);
@@ -216,12 +178,13 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				Prodotto prodotto = new Prodotto();
 				prodotto.setIdProdotto(resultSet.getInt(1));
 				prodotto.setNome(resultSet.getString(2));
-				prodotto.setMarca(resultSet.getString(3));
-				prodotto.setPrezzo(resultSet.getDouble(4));
-				prodotto.setOfferta(resultSet.getBoolean(5));
-				prodotto.setSconto(resultSet.getInt(6));
-				prodotto.setQuantitaDisponibile(resultSet.getInt(7));
-				prodotto.setImmagine(resultSet.getString(8));
+				prodotto.setCategoria(categoria);
+				prodotto.setMarca(resultSet.getString(4));
+				prodotto.setPrezzo(resultSet.getDouble(5));
+				prodotto.setOfferta(resultSet.getBoolean(6));
+				prodotto.setSconto(resultSet.getInt(7));
+				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
+				prodotto.setImmagine(resultSet.getString(9));
 				listaProdottiPerCategoria.add(prodotto);
 			}
 		} catch (SQLException e) {
@@ -240,7 +203,8 @@ public class ProdottoDaoImpl implements ProdottoDao{
 		}
 		return listaProdottiPerCategoria;
 	}
-
+	
+	
 	@Override
 	public void close() {
 		if (connection != null) {

@@ -4,7 +4,8 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
  
   <display-name>SHOOOOOP</display-name>
   
-    <servlet>
+  <!-- LOGIN -->
+   <servlet>
   <servlet-name>Login</servlet-name>
   <servlet-class>it.gruppo2.ShopOnline.controller.Login</servlet-class>
   </servlet>
@@ -13,8 +14,8 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   <url-pattern>/login</url-pattern>
   </servlet-mapping>
   
-  
-  <servlet>
+  <!-- REGISTRAZIONE -->
+   <servlet>
   <servlet-name>Registrazione</servlet-name>
   <servlet-class>it.gruppo2.ShopOnline.controller.Registrazione</servlet-class>
   </servlet>
@@ -23,7 +24,8 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   <url-pattern>/registrazione</url-pattern>
   </servlet-mapping>
   
-  <servlet>
+  <!-- LOGOUT -->
+   <servlet>
   <servlet-name>Logout</servlet-name>
   <servlet-class>it.gruppo2.ShopOnline.controller.Logout</servlet-class>
   </servlet>
@@ -31,5 +33,97 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   <servlet-name>Logout</servlet-name>
   <url-pattern>/logout</url-pattern>
   </servlet-mapping>
+  
+  <!-- LISTA PRODOTTI PER CATEGORIA -->
+   <servlet>
+  <servlet-name>ListaProdottiPerCategoria</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.ListaProdottiPerCategoria</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>ListaProdottiPerCategoria</servlet-name>
+  <url-pattern>/listaProdottiPerCategoria</url-pattern>
+  </servlet-mapping>
+  
+  <!-- LISTA PRODOTTI IN OFFERTA -->
+   <servlet>
+  <servlet-name>ListaProdottiInOfferta</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.ListaProdottiInOfferta</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>ListaProdottiInOfferta</servlet-name>
+  <url-pattern>/listaProdottiInOfferta</url-pattern>
+  </servlet-mapping>
+  
+    <!-- DETTAGLI PRODOTTO -->
+   <servlet>
+  <servlet-name>DettagliProdotto</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.DettagliProdotto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>DettagliProdotto</servlet-name>
+  <url-pattern>/dettagliProdotto</url-pattern>
+  </servlet-mapping>
+  
+  <!-- ACQUISTA -->
+  <servlet>
+  <servlet-name>Acquista</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.Acquista</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>Acquista</servlet-name>
+  <url-pattern>/acquista</url-pattern>
+  </servlet-mapping>
+  
+   <!-- LISTA ORDINI -->
+   <servlet>
+  <servlet-name>ListaOrdini</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.ListaOrdini</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>ListaOrdini</servlet-name>
+  <url-pattern>/listaOrdini</url-pattern>
+  </servlet-mapping>
+  
+   <!-- LISTA ACQUISTI -->
+   <servlet>
+  <servlet-name>ListaAcquisti</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.ListaAcquisti</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>ListaAcquisti</servlet-name>
+  <url-pattern>/listaAcquisti</url-pattern>
+  </servlet-mapping>  
+  
+  <!-- LISTA CARRELLO -->
+   <servlet>
+  <servlet-name>ListaCarrello</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.ListaCarrello</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>ListaCarrello</servlet-name>
+  <url-pattern>/listaCarrello</url-pattern>
+  </servlet-mapping>
+  
+  <!-- CONTATTI -->
+   <servlet>
+  <servlet-name>Contatti</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.Contatti</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>Contatti</servlet-name>
+  <url-pattern>/contatti</url-pattern>
+  </servlet-mapping>
+  
+  <!-- MY ACCOUNT -->
+   <servlet>
+  <servlet-name>MyAccount</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.MyAccount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>MyAccount</servlet-name>
+  <url-pattern>/myAccount</url-pattern>
+  </servlet-mapping>
+  
+
   
 </web-app>

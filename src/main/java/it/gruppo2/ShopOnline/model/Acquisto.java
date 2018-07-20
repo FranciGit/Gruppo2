@@ -5,13 +5,27 @@ import java.time.LocalDate;
 public class Acquisto {
 	
 	private int idAcquisto;
-	private TipoSpedizione tipoSpedizione;
+	private TipoSpedizione tipoSpedizione; //enum
 	private LocalDate dataInizio;
 	private LocalDate dataFine;
-	private double prezzoDiSpedizione;
 	private int quantitaAcquistata;
 	private int idUtente;
 	private int idProdotto;
+	private double prezzoAcquisto;
+
+	public Acquisto(TipoSpedizione tipoSpedizione, LocalDate dataInizio, LocalDate dataFine,
+			int quantitaAcquistata, int idUtente, int idProdotto) {
+		this.idAcquisto = idAcquisto;
+		this.tipoSpedizione = tipoSpedizione;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.quantitaAcquistata = quantitaAcquistata;
+		this.idUtente = idUtente;
+		this.idProdotto = idProdotto;
+	}
+	
+	public Acquisto() {
+	}
 	
 	public int getIdAcquisto() {
 		return idAcquisto;
@@ -37,12 +51,6 @@ public class Acquisto {
 	public void setDataFine(LocalDate dataFine) {
 		this.dataFine = dataFine;
 	}
-	public double getPrezzoDiSpedizione() {
-		return prezzoDiSpedizione;
-	}
-	public void setPrezzoDiSpedizione(double prezzoDiSpedizione) {
-		this.prezzoDiSpedizione = prezzoDiSpedizione;
-	}
 	public int getQuantitaAcquistata() {
 		return quantitaAcquistata;
 	}
@@ -61,22 +69,30 @@ public class Acquisto {
 	public void setIdProdotto(int idProdotto) {
 		this.idProdotto = idProdotto;
 	}
+	public double getPrezzoAcquisto() {
+		return prezzoAcquisto;
+	}
+	public void setPrezzoAcquisto(double prezzoAcquisto) {
+		this.prezzoAcquisto = prezzoAcquisto;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "Acquisto [idAcquisto=" + idAcquisto
 				+ ", tipoSpedizione=" + tipoSpedizione
 				+ ", dataInizio=" + dataInizio
 				+ ", dataFine=" + dataFine
-				+ ", prezzoDiSpedizione=" + prezzoDiSpedizione
 				+ ", quantitaAcquistata=" + quantitaAcquistata
-				+ ", idUtente=" + idUtente
+				+ ", idUtente="	+ idUtente
 				+ ", idProdotto=" + idProdotto
-				+ "]";
-	}
-	
-	public double calcolaPrezzo(double prezzoProdotto, double prezzoDiSpedizione) {
-		double prezzoTotaleProdotto = prezzoProdotto + prezzoDiSpedizione;
-		return prezzoTotaleProdotto;
+				+ ", prezzoAcquisto=" + prezzoAcquisto + "]";
 	}
 
+	public void calcolaPrezzo(double prezzoProdotto, int quantitaAcquistata) {
+		double prezzoTotale = prezzoProdotto * quantitaAcquistata;
+		prezzoTotale = prezzoTotale + tipoSpedizione.getPrezzoDiSpedizione();
+		this.prezzoAcquisto = prezzoTotale; 
+	}
+	
 }

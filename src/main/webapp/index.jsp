@@ -1,3 +1,6 @@
+<%@page import="it.gruppo2.ShopOnline.model.Prodotto"%>
+<%@page import="java.util.List"%>
+<%@page import="it.gruppo2.ShopOnline.model.Categoria"%>
 <%@page import="it.gruppo2.ShopOnline.model.Utente"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -10,139 +13,99 @@
 <link rel="stylesheet" href="css/stile.css">
 <script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<link href="search.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 
-	<%
-		Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
-	%>
+	<%Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");%>
+	<%List<Prodotto> listaProdottiPerCategoria = (List<Prodotto>) request
+				.getAttribute("listaProdottiPerCategoria"); %>
+	<% Prodotto prodotto = (Prodotto) session.getAttribute("prodotto"); %>
+	
 
+	<!------------- NAVBAR -------------->
 
-	<!-- NAVBAR -->
+<nav class="navbar navbar-default">
+<div class="navbar-header">
+ <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+ data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.jsp">Logo</a>
+        </div>
 
-	<div class="topnav">
-		<nav class="nav navbar-default">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="contatti.jsp">Contatti<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="listaProdottiInOfferta">Offerte<span class="sr-only">(current)</span></a></li>
+                    
+            
+              <!--  MENU A TENDINA CATEGORIE - FORM -->
+              
+            <form name="categoria"  class="navbar-form navbar-left form-horizontal"
+            id="search-box" action ="listaProdottiPerCategoria" method="get">
+			<select name="categoria">
+			<option value="ABBIGLIAMENTO">Abbigliamento</option>
+				<option value="CASA">Casa</option>
+				<option value="ELETTRONICA">Elettronica</option>
+				<option value="LIBRI">Libri</option>
+				<option value="SPORT">Sport</option>
+			</select>
+			
+			<!--  BARRA DI RICERCA -->
+        
+        
+    
+          <fieldset>
+              <div class="input-group">
+                 <input type="text" class="search-box" placeholder="Search" id="search-in" role="combobox" >
+                 <button type="submit" class="btn" value="Cerca"><span class="glyphicon glyphicon-search"></span></button>
+                 
+              </div>
+              </fieldset>
+          </form>   
+        
+        
+        <!-- CHIUSURA BARRA DI RICERCA -->
+        
+        
+ 
+              <% if (utenteLoggato == null) { %>
+              <li class="nav navbar-nav">
+          	   <a href="login.jsp" class="collapse navbar-collapse">Accedi<span class="sr-only"></span></a>
+          	   <% } else { %>
+              <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Il mio account<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="myAccount.jsp">il mio profilo</a></li>
+                <li><a href="listaAcquisti">i miei acquisti</a></li>
+                <li><a href="listaOrdini">i miei ordini</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="logout">logout</a></li> 
+              </ul>
+              <li class="dropdown">
+              <li class="active"><a href="listaCarrello.jsp">Il mio carrello<span class="sr-only">(current)</span></a></li>
+             
+             </li>
+           <% } %>
+            </li>
+            
+          
+        </div>
+      
+        
+    </nav>
+    <!----------- !Navbar End ------------>
 
-
-
-
-		<ul class="title-area">
-			<li class="name" style="list-style-type: none">
-				<h1>LOGO</h1>
-			</li>
-		</ul>
-
-		<span>
-			<div class="collapse navbar-collapse">
-
-
-				<div class="topnav-left">
-					<div class="dropdown">
-						<button class="dropbtn">Tutte le categorie</button>
-						<div class="dropdown-content">
-							<a href="#">Abbigliamento</a> <a href="#">Casa</a> <a href="#">Elettronica</a>
-							<a href="#">Libri</a> <a href="#">Sport</a>
-						</div>
-					</div>
-
-
-					<div class="topnav-right">
-
-						<% if (utenteLoggato == null) {	%>
-						<div class="dropdown">
-							<button class="dropbtn">Accedi</button>
-							<div class="dropdown-content">
-								<a href="login.jsp">Login</a>
-								<a href="registrazione.jsp">Registrati</a>
-							</div>
-						</div>
-						<% } else {	%>
-						<li><a href="myAccount.jsp">Il mio account</a></li>
-						<li><a href="prodottiCarrello.jsp">Il mio carrello</a></li>
-						<li><a href="logout">Logout</a></li>
-						<%	}	%>
-						
-					</div>
-				</div>
-		</span> </nav>
-	</div>
-
-
-
-
-
-
-
-
-
-
-
-	<!--
-<form class="nav-searchbar">
-<nav class="nav navbar-default">
-
-<div class="collapse navbar-collapse">
-<ul class="nav navbar-nav">
-<input type="text" name="barra" id="barra" class="form-control" placeholder="Ricerca...">
-<button class="btn btn-success" type submit">Cerca</button>
-
-<select aria-describedby="searchDropdownDescription" class="nav-search-dropdown searchSelect" data-nav-digest="iLdVGIUExgXtzWyBMR1pIG1L7AQ" data-nav-selected="0" id="searchDropdownBox" name="url" style="display: block; top: 0px;" tabindex="5" title="Ricerca in">
-<option selected="selected" value="search-alias=aps">Tutte le categorie</option>
-<option value="search-alias=apparel">Abbigliamento</option>
-<option value="search-alias=grocery">Alimentari e cura della casa</option>
-<option value="search-alias=pantry">Amazon Pantry</option>
-<option value="search-alias=warehouse-deals">Amazon Warehouse Deals</option>
-<option value="search-alias=mobile-apps">App e Giochi</option>
-<option value="search-alias=automotive">Auto e Moto</option>
-<option value="search-alias=beauty">Bellezza</option>
-<option value="search-alias=gift-cards">Buoni Regalo</option>
-<option value="search-alias=office-products">Cancelleria e prodotti per ufficio</option>
-<option value="search-alias=kitchen">Casa e cucina</option>
-<option value="search-alias=popular">CD e Vinili </option>
-<option value="search-alias=amazon-devices">Dispositivi Amazon</option>
-<option value="search-alias=electronics">Elettronica</option>
-<option value="search-alias=diy">Fai da te</option>
-<option value="search-alias=dvd">Film e TV</option>
-<option value="search-alias=garden">Giardino e giardinaggio</option>
-<option value="search-alias=toys">Giochi e giocattoli</option>
-<option value="search-alias=jewelry">Gioielli</option>
-<option value="search-alias=handmade">Handmade</option>
-<option value="search-alias=lighting">Illuminazione</option>
-<option value="search-alias=industrial">Industria e Scienza</option>
-<option value="search-alias=computers">Informatica</option>
-<option value="search-alias=digital-text">Kindle Store</option>
-<option value="search-alias=stripbooks">Libri</option>
-<option value="search-alias=english-books">Libri in altre lingue</option>
-<option value="search-alias=fashion">Moda</option>
-<option value="search-alias=digital-music">Musica Digitale</option>
-<option value="search-alias=watches">Orologi</option>
-<option value="search-alias=baby">Prima infanzia</option>
-<option value="search-alias=pets">Prodotti per animali domestici</option>
-<option value="search-alias=hpc">Salute e cura della persona</option>
-<option value="search-alias=shoes">Scarpe e borse</option>
-<option value="search-alias=software">Software</option>
-<option value="search-alias=sporting">Sport e tempo libero</option>
-<option value="search-alias=mi">Strumenti musicali e DJ</option>
-<option value="search-alias=luggage">Valigeria</option>
-<option value="search-alias=videogames">Videogiochi</option>
-</select>
-
-<%if (utenteLoggato == null) {%>
-<li><a href="registrazione.jsp">Registrazione</a></li>
-<li><a href="login.jsp">Login</a></li>
-<%} else {%>
-<li><a href="logout.jsp">Logout</a></li>
-<li><a href="Prodotti acquistati">Lista Acquisti</a></li>
-<li><a href="I tuoi ordini">Lista Ordini</a></li>
-<%}%>
-
-</ul>
-</div>
-</nav>
-
-</form>
-
- -->
+	
 
 
 	<div class="container">
@@ -204,6 +167,8 @@ data-slide-to indica quali immagini con indice che parte da 0-->
 
 	</div>
 	<!-- chiude container -->
+
+
 
 </body>
 </html>

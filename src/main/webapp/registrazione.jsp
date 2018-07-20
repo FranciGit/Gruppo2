@@ -10,36 +10,86 @@
 <link rel="stylesheet" href="css/stile.css">
 <script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/gestioneForm.js"></script> 
 </head>
 <body>
 
 
 <% Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato"); %>
 
-<!-- NAVBAR -->
-<nav class="nav navbar-default">
+	
+
+	<!------------- Navbar -------------->
+
+<nav class="navbar navbar-default">
 <div class="navbar-header">
-<a href="index.jsp" class="navbar-brand">Home</a>
-</div>
+ <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.jsp">Logo</a>
+        </div>
 
-<div class="collapse navbar-collapse">
-<ul class="nav navbar-nav">
-<li><a href="">Lista Prodotti</a></li>
-
-<% if (utenteLoggato == null) { %>
-<li><a href="registrazione.jsp">Registrazione</a></li>
-<li><a href="login.jsp">Login</a></li>
-<% } else { %>
-<li><a href="logout.jsp">Logout</a></li>
-<li><a href="listaAcquisti">Lista Acquisti</a></li>
-<li><a href="listaOrdini">Lista Ordini</a></li>
-<% } %>
-<!-- copio utenteLoggato e la nuova navbar in registrazione e login -->
-</ul>
-</div>
-
-</nav>
-
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="contatti.jsp">Contatti<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="listaProdottiInOfferta">Offerte<span class="sr-only">(current)</span></a></li>
+            <li class="dropdown">
+            
+            <!--  MENU A TENDINA CATEGORIE -->
+            
+            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown">Tutte le categorie<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            <li><a value="search-alias=ABBIGLIAMENTO">Abbigliamento</a></li>
+            <li><a href="listaProdottiPerCategoria">Casa</a></li>
+            <li><a href="listaProdottiPerCategoria">Elettronica</a></li>
+            <li><a href="listaProdottiPerCategoria">Libri</a></li>
+            <li><a href="listaProdottiPerCategoria">Sport</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="listaProdottiPerCategoria.jsp">Guarda Tutto</a></li>
+            </ul>
+            </li>
+                        
+            
+        <!--  BARRA DI RICERCA -->
+        
+          <form class="navbar-form navbar-left form-horizontal" role="search">
+              <div class="input-group">
+                 <input type="text" class="search-box" placeholder="Search">
+                 <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+              </div>
+          </form>   
+ 
+              <% if (utenteLoggato == null) { %>
+              <li class="nav navbar-nav">
+          	   <a href="login.jsp" class="collapse navbar-collapse">Accedi<span class="sr-only"></span></a>
+          	   <% } else { %>
+              <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Il mio account<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="myAccount.jsp">il mio profilo</a></li>
+                <li><a href="listaAcquisti.jsp">i miei acquisti</a></li>
+                <li><a href="listaOrdini.jsp">i miei ordini</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="logout">logout</a></li> 
+              </ul>
+              <li class="dropdown">
+              <li class="active"><a href="listaCarrello.jsp">Il mio carrello<span class="sr-only">(current)</span></a></li>
+             
+             </li>
+           <% } %>
+            </li>
+            
+          
+        </div>
+      
+        
+    </nav>
+    <!----------- !Navbar End ------------>
 <div class="container"> <!-- CONTIENE TUTTO (header e form) -->
 
 <!-- HEADER -->
@@ -112,7 +162,6 @@ style="margin-left:2%">
 <span class="col-md-3"></span>
 </div>
 
-</div>
 
 </form> <!-- chiusura form -->
 
@@ -128,20 +177,13 @@ style="margin-left:2%">
 
 <!-- ALERT -->
 <div class="alert alert-danger" id="alert" style="display: none">
-<!-- questa classe posizione un grosso banner di errore in fondo allo schermo -->
+
 <p class="text-center">Tutti i campi sono obbligatori</p>
-<!-- di default l'alert è sempre presente:  per visualizzarlo solo quando l'utente
-clicca su Registrati senza aver compilato tutti i campi, inserisco innanzitutto l'attributo
-STYLE (display: none), poi dovrò gestire la sua comparsa in caso di registrazione invalida
-(vado in gestioneForm, cioè in javascript per modificare dinamicamente l'elemento - nell'else) -->
-
-</div> <!-- chiusura container -->
-
-<!-- ora che il forum è completo vado a inserire action e method:
-la action punterà alla Servlet "registrazione" che vado a creare,
-mentre il metodo sarà una chiamata post -->
 
 
+</div> 
+
+</div>
 
 </body>
 </html>

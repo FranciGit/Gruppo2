@@ -10,7 +10,7 @@ public class Prodotto {
 	private boolean offerta;
 	private int sconto; //%
 	private int quantitaDisponibile;
-	private String immagine; //percorso
+	private String immagine; //INSERIRE PERCORSO
 	
 	public int getIdProdotto() {
 		return idProdotto;
@@ -75,6 +75,14 @@ public class Prodotto {
 				+ quantitaDisponibile + ", immagine=" + immagine + "]";
 	}
 	
-	
+	public double calcoloPrezzoProdotto(double prezzo, int sconto, boolean offerta) {
+		double prezzoProdotto;
+		if (offerta && (sconto > 0)) {
+			prezzoProdotto = prezzo * (100 - sconto) / 100;
+		} else {
+			prezzoProdotto = prezzo;
+		}
+		return prezzoProdotto;
+	}
 
 }

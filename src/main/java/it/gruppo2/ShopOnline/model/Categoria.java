@@ -13,4 +13,14 @@ public enum Categoria {
 	private Categoria(int numeroCategoria) {
 		this.numeroCategoria = numeroCategoria;
 	}
+
+	public int getNumeroCategoria() {
+		return numeroCategoria;
+	}
+
+	public void setNumeroCategoria(int numeroCategoria) {
+		this.numeroCategoria = numeroCategoria;
+	}
+	
+	
 }

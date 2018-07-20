@@ -39,10 +39,10 @@ public class AcquistoDaoImpl implements AcquistoDao {
 			prepared.setDate(2, dataInizio);
 			Date dataFine = Date.valueOf(acquisto.getDataFine());
 			prepared.setDate(3, dataFine);
-			prepared.setDouble(4, acquisto.getPrezzoDiSpedizione());
-			prepared.setInt(5, acquisto.getQuantitaAcquistata());
-			prepared.setInt(6, acquisto.getIdUtente());
-			prepared.setInt(7, acquisto.getIdProdotto());
+			prepared.setInt(4, acquisto.getQuantitaAcquistata());
+			prepared.setInt(5, acquisto.getIdUtente());
+			prepared.setInt(6, acquisto.getIdProdotto());
+			prepared.setDouble(7, acquisto.getPrezzoAcquisto());
 			prepared.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,24 +61,24 @@ public class AcquistoDaoImpl implements AcquistoDao {
 	}
 
 	@Override
-	public List<Acquisto> getAllAcquisti(int idUtente, int idProdotto) {
+	public List<Acquisto> getAllAcquistiByUtente(int idUtente) {
 		List<Acquisto> listaAcquisti = new ArrayList<>();
-		String query = "select * from acquisto where id_utente = ? and id_prodotto = ?";
+		String query = "select * from acquisto where id_utente = ?";
 		ResultSet rs = null;
 		try {
 			prepared = connection.prepareStatement(query);
 			prepared.setInt(1, idUtente);
-			prepared.setInt(2, idProdotto);
 			rs = prepared.executeQuery();
 			while (rs.next()) {
 				Acquisto acquisto = new Acquisto();
-				TipoSpedizione tipoSpedizione = TipoSpedizione.valueOf(rs.getString(1));
-				acquisto.setDataInizio(rs.getDate(2).toLocalDate());
-				acquisto.setDataFine(rs.getDate(3).toLocalDate());
-				acquisto.setPrezzoDiSpedizione(rs.getDouble(4));
+				acquisto.setIdAcquisto(rs.getInt(1));
+				TipoSpedizione tipoSpedizione = TipoSpedizione.valueOf(rs.getString(2));
+				acquisto.setDataInizio(rs.getDate(3).toLocalDate());
+				acquisto.setDataFine(rs.getDate(4).toLocalDate());
 				acquisto.setQuantitaAcquistata(rs.getInt(5));
-				acquisto.setIdUtente(idUtente);
-				acquisto.setIdProdotto(idProdotto);
+				acquisto.setIdUtente(rs.getInt(6));
+				acquisto.setIdProdotto(rs.getInt(7));
+				acquisto.setPrezzoAcquisto(rs.getDouble(8));
 				listaAcquisti.add(acquisto);
 			}
 		} catch (SQLException e) {

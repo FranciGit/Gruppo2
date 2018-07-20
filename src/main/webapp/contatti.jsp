@@ -5,20 +5,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Contatti</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/stile.css">
 <script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/gestioneForm.js"></script> 
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=LaTuaChiave&sensor=false"></script>
+
 </head>
 <body>
+<%Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");%>
 
-<% String username = (String) request.getAttribute("username"); %>
-<% Object errore = request.getAttribute("errore"); %>
-<% Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato"); %>
 
-<!------------- Navbar -------------->
+	<!------------- Navbar -------------->
 
 <nav class="navbar navbar-default">
 <div class="navbar-header">
@@ -62,14 +61,6 @@
                  <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
               </div>
           </form>   
-          
-          
-          
-          
- 
- <!-- L'UTENTE STA EFFETTUANDO IL LOGIN QUINDI QUESTA PARTE SOTTO è DA RIVEDERE! -->
- 
-
  
               <% if (utenteLoggato == null) { %>
               <li class="nav navbar-nav">
@@ -97,78 +88,88 @@
         
     </nav>
     <!----------- !Navbar End ------------>
-<div class="container">
 
-<!-- HEADER -->
-<div class="page-header text-center">
-<h1>Login</h1>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <style type="text/css">
+
+      html { height: 100% }
+
+      body { height: 100%; margin: 0; padding: 0 }
+
+      #canvas_mappa { height: 100% }
+
+    </style>
+
+   
+    </script>
+   <script >
+function initializza() {
+	var latLngRoma = new google.maps.LatLng(41.8905198, 12.4942486);
+
+	var opzioni = {
+
+	center: latLngRoma,
+
+	zoom: 8,
+
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+
+	};
+
+	var map = new google.maps.Map(document.getElementById("canvas_mappa"), opzioni);
+
+	var marker = new google.maps.Marker({position: latLngRoma, map: map, title: "Roma" });
+
+	}
+</script> 
+  </head>
+
+  <body onload="initializza()">
+
+    <div id="canvas_mappa" style="width:100%; height:100%"></div>
+
+
+<div align="center">
+<h1>Chi siamo</h1>
+<ul type="none">
+<li>iShop S.r.l. offre i propri servizi di consulenza mettendo a disposizione</li>
+<br>
+<li> dei clienti figure professionali in grado di coprire ruoli gestionali ed operativi sfruttando </li> 
+<br>
+<li>la competenza sulle tecnologie più avanzate e maggiormente richieste dal mercato.</li>
+</ul>
+
+
 </div>
 
-<!-- FORM (action rimanda alla servlet login che vado a creare + nuova function ValidazioneLoginin js-->  
-<form class="form-horizontal" action="login" method="post"
-onsubmit="return validazioneLogin()">
+<div align="center">
 
-<!-- USERNAME -->
-<div class="form-group">
-<label for="username" class="control-label col-md-4">Inserisci username</label>
-<div class="col-md-5">
-<input type="text" name="username" id="username" class="form-control"
+<h1>Contatti</h1>
+<ul type="none">
+<li>iShop S.r.l.</li>
+<br>
+<li>E-mail <span style="color:#FF6600">info@ishop.it</span></li>
+<br>
+<li>tel. 02 36045773 &nbsp; Fax 02 395 00 890</li>
 
-<% if (username != null) { %>
-value="<%=username %>"
-<% } %>
->
-
-</div>
-<span class="col-md-3"></span>
+</ul>
 </div>
 
-<!-- PASSWORD -->
-<div class="form-group">
-<label for="password" class="control-label col-md-4">Inserisci Password</label>
-<div class="col-md-5">
-<input type="password" name="password" id="password" class="form-control">
-</div>
-<span class="col-md-3"></span>
-</div>
-
-<!--  aggiungo i BOTTONI -->
-<div class="form-group">
-<span class="col-md-4"></span>
-<div class="col-md-5">
-<input type="submit" value="Login" class="btn btn-primary" >
-<input type="reset" value="Ripristina" class="btn btn-warning"
-style="margin-left:2%">
-</div>
-<span class="col-md-3"></span>
-</div>
+<!-- MAPPINA GOOGLE API -->
 
 
-</form> <!-- chiusura form -->
 
-<!-- LINK -->
-<div class="row">
-<span class="col-md-4"></span>
-<div class="col-md-5">
-<p>Non sei ancora registrato?</p>
-<p>Cicca <a href="registrazione.jsp">qui</a> per la registrazione</p>
+<div align="center">
+<h1>Dove siamo</h1>
+<ul type="none">
+<li>Sede legale: Via Broletto, 12 - 20121 Milano (Mi)</li>
+<br>
+<li>Sede operativa: Corso Magenta, 75 - 20123 Milano Mi</li>
+</ul>
+
 </div>
-<span class="col-md-3"></span>
-</div>
-
-<!-- ALERT -->
-<div class="alert alert-danger" id="alert" style="display: none">
-<p class="text-center">Tutti i campi sono obbligatori</p>
-</div>
-
-<%if (errore != null) { %>
-<div class="alert alert-danger">
-<p class="text-center">Username o Password errati</p>
-</div>
-<% } %>
-
-
-</div> <!-- chiusura container -->
 
 </body>
 </html>

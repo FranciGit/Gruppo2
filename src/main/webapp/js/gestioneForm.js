@@ -25,3 +25,23 @@ function validazioneLogin() {
 		return false;
 	}
 }
+
+
+function initializza() {
+	var latLngRoma = new google.maps.LatLng(41.8905198, 12.4942486);
+
+	var opzioni = {
+
+	center: latLngRoma,
+
+	zoom: 8,
+
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+
+	};
+
+	var map = new google.maps.Map(document.getElementById("canvas_mappa"), opzioni);
+
+	var marker = new google.maps.Marker({position: latLngRoma, map: map, title: "Roma" });
+
+	}

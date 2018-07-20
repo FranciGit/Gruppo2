@@ -11,27 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.gruppo2.ShopOnline.dao.ProdottoDaoImpl;
+import it.gruppo2.ShopOnline.model.Categoria;
 import it.gruppo2.ShopOnline.model.Prodotto;
 
-public class ListaCarrello extends HttpServlet {
-	
-	/**
-	 * questa servlet ritorna la listaCarrello, che contiene tutti i prodotti
-	 * che l'utente ha intenzione di acquistare
-	 */
+public class ListaProdottiInOfferta extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		List<Prodotto> listaCarrello = new ArrayList<>();
+		List<Prodotto> listaProdottiInOfferta = new ArrayList<>();
 		ProdottoDaoImpl prodottoService = new ProdottoDaoImpl();
-		int idProdotto = Integer.parseInt(req.getParameter("idProdotto"));
-		Prodotto prodotto = prodottoService.getProdottoById(idProdotto);
-		listaCarrello.add(prodotto);
+		listaProdottiInOfferta = prodottoService.getProdottiInOfferta();
+		prodottoService.close();
+		req.setAttribute("listaProdottiInOfferta", listaProdottiInOfferta);
+		System.out.println(listaProdottiInOfferta);
 		RequestDispatcher dispatcher =
-				req.getRequestDispatcher("listaCarrello.jsp");
+				req.getRequestDispatcher("listaProdottiInOfferta.jsp");
 		dispatcher.forward(req, resp);
 	}
-	
-	
+
 }

@@ -11,13 +11,13 @@ public interface ProdottoDao {
 	
 	public List<Prodotto> getAllProdotti();
 	
-	public List<Prodotto> getProdottiDisponibili(boolean disponibile, int idProdotto);
+	public void updateQuantita(int quantitaDisponibile, int idProdotto);
 	
-	public void updateDisponibile(boolean disponibile, int idProdotto);
-	
-	public List<Prodotto> getProdottiInOfferta(boolean offerta, int idProdotto);
+	public List<Prodotto> getProdottiInOfferta();
 	
 	public List<Prodotto> getProdottiByCategoria(Categoria categoria);
+	
+	//AGGIUNGERE METODO PER RIMUOVERE I PRODOTTI DAL CARRELLO?
 	
 	public void close();
 

@@ -16,38 +16,32 @@ import it.gruppo2.ShopOnline.dao.AcquistoDaoImpl;
 import it.gruppo2.ShopOnline.model.Acquisto;
 import it.gruppo2.ShopOnline.model.Utente;
 
-public class ListaAcquisti extends HttpServlet {
-
-	/**
-	 * Questa servlet gestisce la chiamata dal form ritornando la lista acquisti
-	 * se dataFine (consegna del prodotto) è anteriore rispetto alla data
-	 * odierna, o la lista ordini se dataFine è posteriore alla data odierna
-	 */
-
+public class ListaOrdini extends HttpServlet {
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		List<Acquisto> listaCompleta = new ArrayList<>();
-		List<Acquisto> listaAcquisti = new ArrayList<>();
+		List<Acquisto> listaOrdini = new ArrayList<>();
 		AcquistoDaoImpl acquistoService = new AcquistoDaoImpl();
 		HttpSession sessione = req.getSession();
 		Utente utente = (Utente) sessione.getAttribute("utenteLoggato");
 		int idUtente = utente.getIdUtente();
 		listaCompleta = acquistoService.getAllAcquistiByUtente(idUtente);
+		
 		for (Acquisto acquisto : listaCompleta) {
 			boolean controlloDataFine = true;
-			if (LocalDate.now().isAfter(acquisto.getDataFine())) {
-				listaAcquisti.add(acquisto);
-				System.out.println("acquisto aggiunto a listaAcquisti");
+			if (LocalDate.now().isBefore(acquisto.getDataFine())) {
+				listaOrdini.add(acquisto);
+				System.out.println("acquisto aggiunto a listaOrdini");
 				System.out.println(acquisto);
 			} else {
 				controlloDataFine = false;
 			}
 		}
 		acquistoService.close();
-		req.setAttribute("listaAcquisti", listaAcquisti);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("listaAcquisti.jsp");
+		req.setAttribute("listaOrdini", listaOrdini);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("listaOrdini.jsp");
 		dispatcher.forward(req, resp);
 	}
-		
 }

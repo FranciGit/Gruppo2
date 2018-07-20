@@ -16,8 +16,6 @@
 <body>
 
 <% Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato"); %>
-<% int idProdotto = (int) request.getAttribute("idProdotto"); %>
-
 
 
 <!-- NAVBAR -->

@@ -128,6 +128,7 @@ value="<%=username %>"
 <label for="password" class="control-label col-md-4">Inserisci Password</label>
 <div class="col-md-5">
 <input type="password" name="password" id="password" class="form-control">
+<input type="checkbox" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'"> Mostra password
 </div>
 <span class="col-md-3"></span>
 </div>

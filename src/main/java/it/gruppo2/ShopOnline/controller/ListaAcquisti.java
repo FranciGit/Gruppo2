@@ -27,22 +27,15 @@ public class ListaAcquisti extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		List<Acquisto> listaCompleta = new ArrayList<>();
 		List<Acquisto> listaAcquisti = new ArrayList<>();
 		AcquistoDaoImpl acquistoService = new AcquistoDaoImpl();
 		HttpSession sessione = req.getSession();
 		Utente utente = (Utente) sessione.getAttribute("utenteLoggato");
 		int idUtente = utente.getIdUtente();
-		listaCompleta = acquistoService.getAllAcquistiByUtente(idUtente);
-		for (Acquisto acquisto : listaCompleta) {
-			boolean controlloDataFine = true;
-			if (LocalDate.now().isAfter(acquisto.getDataFine())) {
-				listaAcquisti.add(acquisto);
-				System.out.println("acquisto aggiunto a listaAcquisti");
-				System.out.println(acquisto);
-			} else {
-				controlloDataFine = false;
-			}
+		listaAcquisti = acquistoService.getAllAcquistiByUtente(idUtente);
+		for (Acquisto acquisto : listaAcquisti) {
+			System.out.println("prodotto acquistato");
+			System.out.println(acquisto);
 		}
 		acquistoService.close();
 		req.setAttribute("listaAcquisti", listaAcquisti);

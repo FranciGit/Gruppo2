@@ -21,23 +21,15 @@ public class ListaOrdini extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		List<Acquisto> listaCompleta = new ArrayList<>();
 		List<Acquisto> listaOrdini = new ArrayList<>();
 		AcquistoDaoImpl acquistoService = new AcquistoDaoImpl();
 		HttpSession sessione = req.getSession();
 		Utente utente = (Utente) sessione.getAttribute("utenteLoggato");
 		int idUtente = utente.getIdUtente();
-		listaCompleta = acquistoService.getAllAcquistiByUtente(idUtente);
-		
-		for (Acquisto acquisto : listaCompleta) {
-			boolean controlloDataFine = true;
-			if (LocalDate.now().isBefore(acquisto.getDataFine())) {
-				listaOrdini.add(acquisto);
+		listaOrdini = acquistoService.getAllOrdiniByUtente(idUtente);
+		for (Acquisto acquisto : listaOrdini) {
 				System.out.println("acquisto aggiunto a listaOrdini");
 				System.out.println(acquisto);
-			} else {
-				controlloDataFine = false;
-			}
 		}
 		acquistoService.close();
 		req.setAttribute("listaOrdini", listaOrdini);

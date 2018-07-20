@@ -63,7 +63,8 @@ public class AcquistoDaoImpl implements AcquistoDao {
 	@Override
 	public List<Acquisto> getAllAcquistiByUtente(int idUtente) {
 		List<Acquisto> listaAcquisti = new ArrayList<>();
-		String query = "select * from acquisto where id_utente = ?";
+		String query = "select * from acquisto where id_utente = ?"
+				+ "and sysdate > data_fine";
 		ResultSet rs = null;
 		try {
 			prepared = connection.prepareStatement(query);
@@ -97,7 +98,46 @@ public class AcquistoDaoImpl implements AcquistoDao {
 		}
 		return listaAcquisti;
 	}
-
+	
+	@Override
+	public List<Acquisto> getAllOrdiniByUtente(int idUtente) {
+		List<Acquisto> listaOrdini = new ArrayList<>();
+		String query = "select * from acquisto where id_utente = ?"
+				+ " and sysdate < data_fine";
+		ResultSet rs = null;
+		try {
+			prepared = connection.prepareStatement(query);
+			prepared.setInt(1, idUtente);
+			rs = prepared.executeQuery();
+			while (rs.next()) {
+				Acquisto acquisto = new Acquisto();
+				acquisto.setIdAcquisto(rs.getInt(1));
+				TipoSpedizione tipoSpedizione = TipoSpedizione.valueOf(rs.getString(2));
+				acquisto.setDataInizio(rs.getDate(3).toLocalDate());
+				acquisto.setDataFine(rs.getDate(4).toLocalDate());
+				acquisto.setQuantitaAcquistata(rs.getInt(5));
+				acquisto.setIdUtente(rs.getInt(6));
+				acquisto.setIdProdotto(rs.getInt(7));
+				acquisto.setPrezzoAcquisto(rs.getDouble(8));
+				listaOrdini.add(acquisto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (prepared != null) {
+					prepared.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return listaOrdini;
+	}
+	
 	@Override
 	public void close() {
 		if (connection != null) {
@@ -108,7 +148,5 @@ public class AcquistoDaoImpl implements AcquistoDao {
 			}
 		}		
 	}
-	
-	
 
 }

@@ -24,7 +24,7 @@ request.getAttribute("listaProdottiPerCategoria"); %>
 
 <div class "container">
 <div class="page-header">
-<h1>Prodotti in offerta</h1>
+<h1>Prodotti per categoria</h1>
 </div>
 
 

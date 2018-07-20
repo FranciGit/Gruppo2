@@ -18,6 +18,9 @@ public interface ProdottoDao {
 	public List<Prodotto> getProdottiByCategoria(Categoria categoria);
 	
 	//AGGIUNGERE METODO PER RIMUOVERE I PRODOTTI DAL CARRELLO?
+	//public void rimuoviDalCarrello(int idProdotto);
+	
+	public List<Prodotto> getProdottiByRicerca(String paroleChiave);
 	
 	public void close();
 

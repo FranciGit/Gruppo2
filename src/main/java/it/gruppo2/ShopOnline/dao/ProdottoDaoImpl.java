@@ -43,6 +43,7 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				prodotto.setSconto(rs.getInt(7));
 				prodotto.setQuantitaDisponibile(rs.getInt(8));
 				prodotto.setImmagine(rs.getString(9));
+				prodotto.setParoleChiave(rs.getString(10));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -82,6 +83,7 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				prodotto.setSconto(resultSet.getInt(7));
 				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
 				prodotto.setImmagine(resultSet.getString(9));
+				prodotto.setParoleChiave(resultSet.getString(10));
 				listaProdotti.add(prodotto);
 			}
 		} catch (SQLException e) {
@@ -145,6 +147,7 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				prodotto.setSconto(resultSet.getInt(7));
 				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
 				prodotto.setImmagine(resultSet.getString(9));
+				prodotto.setParoleChiave(resultSet.getString(10));
 				listaProdottiInOfferta.add(prodotto);
 			}
 		} catch (SQLException e) {
@@ -185,6 +188,7 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				prodotto.setSconto(resultSet.getInt(7));
 				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
 				prodotto.setImmagine(resultSet.getString(9));
+				prodotto.setParoleChiave(resultSet.getString(10));
 				listaProdottiPerCategoria.add(prodotto);
 			}
 		} catch (SQLException e) {
@@ -204,6 +208,35 @@ public class ProdottoDaoImpl implements ProdottoDao{
 		return listaProdottiPerCategoria;
 	}
 	
+	@Override
+	public List<Prodotto> getProdottiByRicerca(String paroleRicercate) {
+		List<Prodotto> listaProdottiRicercati = new ArrayList<>();
+		String query = "select * from prodotto where parole_chiave like '%?%'";
+		ResultSet rs = null;
+		try {
+			prepared = connection.prepareStatement(query);
+			prepared.setString(1, paroleRicercate);
+			rs = prepared.executeQuery();
+			while (rs.next()) {
+				Prodotto prodotto = new Prodotto();
+				prodotto.setIdProdotto(rs.getInt(1));
+				prodotto.setNome(rs.getString(2));
+				Categoria categoria = Categoria.valueOf(rs.getString(3));
+				prodotto.setCategoria(categoria);
+				prodotto.setMarca(rs.getString(4));
+				prodotto.setPrezzo(rs.getDouble(5));
+				prodotto.setOfferta(rs.getBoolean(6));
+				prodotto.setSconto(rs.getInt(7));
+				prodotto.setQuantitaDisponibile(rs.getInt(8));
+				prodotto.setImmagine(rs.getString(9));
+				prodotto.setParoleChiave(rs.getString(10));
+				listaProdottiRicercati.add(prodotto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listaProdottiRicercati;
+	}
 	
 	@Override
 	public void close() {
@@ -215,5 +248,6 @@ public class ProdottoDaoImpl implements ProdottoDao{
 			}
 		}		
 	}
+
 
 }

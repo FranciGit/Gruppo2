@@ -9,6 +9,8 @@ public interface AcquistoDao {
 	public void insertAcquisto(Acquisto acquisto);
 	
 	public List<Acquisto> getAllAcquistiByUtente(int idUtente);
+	
+	public List<Acquisto> getAllOrdiniByUtente(int idUtente);
 
 	public void close();
 

@@ -65,6 +65,7 @@ public class CarrelloDaoImpl implements CarrelloDao {
 				prodotto.setSconto(resultSet.getInt(6));
 				prodotto.setQuantitaDisponibile(resultSet.getInt(7));
 				prodotto.setImmagine(resultSet.getString(8));
+				prodotto.setParoleChiave(resultSet.getString(9));
 				listaProdottiCarrello.add(prodotto);
 			}
 		} catch (SQLException e) {

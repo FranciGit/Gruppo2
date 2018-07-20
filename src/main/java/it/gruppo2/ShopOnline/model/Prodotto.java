@@ -11,6 +11,7 @@ public class Prodotto {
 	private int sconto; //%
 	private int quantitaDisponibile;
 	private String immagine; //INSERIRE PERCORSO
+	private String paroleChiave;
 	
 	public int getIdProdotto() {
 		return idProdotto;
@@ -66,13 +67,20 @@ public class Prodotto {
 	public void setImmagine(String immagine) {
 		this.immagine = immagine;
 	}
+	public String getParoleChiave() {
+		return paroleChiave;
+	}
+	public void setParoleChiave(String paroleChiave) {
+		this.paroleChiave = paroleChiave;
+	}
+		
 	@Override
 	public String toString() {
 		return "Prodotto [idProdotto=" + idProdotto + ", nome=" + nome
 				+ ", categoria=" + categoria + ", marca=" + marca
 				+ ", prezzo=" + prezzo + ", offerta=" + offerta
-				+ ", sconto=" + sconto + ", quantitaDisponibile="
-				+ quantitaDisponibile + ", immagine=" + immagine + "]";
+				+ ", sconto=" + sconto + ", quantitaDisponibile=" + quantitaDisponibile
+				+ ", immagine=" + immagine + ", paroleChiave=" + paroleChiave + "]";
 	}
 	
 	public double calcoloPrezzoProdotto(double prezzo, int sconto, boolean offerta) {

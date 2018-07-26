@@ -36,4 +36,5 @@ public class ListaOrdini extends HttpServlet {
 		RequestDispatcher dispatcher = req.getRequestDispatcher("listaOrdini.jsp");
 		dispatcher.forward(req, resp);
 	}
+	
 }

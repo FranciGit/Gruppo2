@@ -21,15 +21,18 @@ public class ListaProdottiPerCategoria extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		//recuperare dal form le parole inserite dall'utente nella barra di ricerca come stringa
+		//splittare la stringa e inserirla come parametro in ingresso del metodo dao:
+		//ciclo for che esegue il controllo per ogni prodotto della lista (che è il ritorno del metodo dao)
+		//istanziare il dao di prodotto per richiamare il metodo getProdottiByRicerca
 		List<Prodotto> listaProdottiPerCategoria = new ArrayList<>();
 		ProdottoDaoImpl prodottoService = new ProdottoDaoImpl();
-		String categoriaString = req.getParameter("categoria").toUpperCase();
-		Categoria categoria = Categoria.valueOf(categoriaString);
-		listaProdottiPerCategoria = prodottoService.getProdottiByCategoria(categoria);
+		String categoria = req.getParameter("categoria");
+		String ricerca = req.getParameter("ricerca").toLowerCase();
+		listaProdottiPerCategoria = prodottoService.getProdottiByRicerca(ricerca, categoria);
+		System.out.println(categoria);
 		prodottoService.close();
-		for (Prodotto prodotto : listaProdottiPerCategoria) {
-			System.out.println(prodotto);
-		}
+		System.out.println(listaProdottiPerCategoria);
 		req.setAttribute("listaProdottiPerCategoria", listaProdottiPerCategoria);
 		RequestDispatcher dispatcher =
 				req.getRequestDispatcher("listaProdottiPerCategoria.jsp");

@@ -1,6 +1,8 @@
 package it.gruppo2.ShopOnline.model;
 
-public class Prodotto {
+import java.io.Serializable;
+
+public class Prodotto implements Serializable {
 	
 	private int idProdotto;
 	private String nome;
@@ -11,7 +13,6 @@ public class Prodotto {
 	private int sconto; //%
 	private int quantitaDisponibile;
 	private String immagine; //INSERIRE PERCORSO
-	private String paroleChiave;
 	
 	public int getIdProdotto() {
 		return idProdotto;
@@ -67,12 +68,7 @@ public class Prodotto {
 	public void setImmagine(String immagine) {
 		this.immagine = immagine;
 	}
-	public String getParoleChiave() {
-		return paroleChiave;
-	}
-	public void setParoleChiave(String paroleChiave) {
-		this.paroleChiave = paroleChiave;
-	}
+	
 		
 	@Override
 	public String toString() {
@@ -80,7 +76,64 @@ public class Prodotto {
 				+ ", categoria=" + categoria + ", marca=" + marca
 				+ ", prezzo=" + prezzo + ", offerta=" + offerta
 				+ ", sconto=" + sconto + ", quantitaDisponibile=" + quantitaDisponibile
-				+ ", immagine=" + immagine + ", paroleChiave=" + paroleChiave + "]";
+				+ ", immagine=" + immagine + "]";
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + idProdotto;
+		result = prime * result + ((immagine == null) ? 0 : immagine.hashCode());
+		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + (offerta ? 1231 : 1237);
+		long temp;
+		temp = Double.doubleToLongBits(prezzo);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + quantitaDisponibile;
+		result = prime * result + sconto;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Prodotto other = (Prodotto) obj;
+		if (categoria != other.categoria)
+			return false;
+		if (idProdotto != other.idProdotto)
+			return false;
+		if (immagine == null) {
+			if (other.immagine != null)
+				return false;
+		} else if (!immagine.equals(other.immagine))
+			return false;
+		if (marca == null) {
+			if (other.marca != null)
+				return false;
+		} else if (!marca.equals(other.marca))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (offerta != other.offerta)
+			return false;
+		if (Double.doubleToLongBits(prezzo) != Double.doubleToLongBits(other.prezzo))
+			return false;
+		if (quantitaDisponibile != other.quantitaDisponibile)
+			return false;
+		if (sconto != other.sconto)
+			return false;
+		return true;
 	}
 	
 	public double calcoloPrezzoProdotto(double prezzo, int sconto, boolean offerta) {
@@ -92,5 +145,5 @@ public class Prodotto {
 		}
 		return prezzoProdotto;
 	}
-
+	
 }

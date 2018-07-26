@@ -20,72 +20,85 @@
 
 <!------------- Navbar -------------->
 
-<nav class="navbar navbar-default">
-<div class="navbar-header">
- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-<span class="sr-only">Toggle navigation</span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.jsp">Logo</a>
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="index.jsp" rel="home" href="index.jsp" title="Il nostro shop"><img class="img-responsive logo" 
+    src="https://nextindustry.net/wp-content/uploads/2018/01/Logo_TV_2015.png"  alt="logo" style="width:50px"></a>
+    
+  </div>
+
+  <!-- CONTATTI E OFFERTE-->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li><a href="contatti.jsp">Contatti</a></li>
+      <li><a href="listaProdottiInOfferta">Offerte</a></li>
+      
+      
+      
+    <!-- RICERCA PER CATEGORIE-->    
+  
+  <div class="input-group">
+	<div class="row">
+	    <form name="categoria"  class="navbar-form navbar-left form-horizontal"
+            id="search-box" action ="listaProdottiPerCategoria" method="get">
+	        
+	         <select class="form-control" name="categoria">	         
+	           <option value="Tutte">
+	           	Tutte le categorie</option><span class="caret"></span> 
+	           <option value="CAMICIE">Camicie</option> 
+	           <option value="GONNE">Gonne</option> 
+	           <option value="SCARPE">Scarpe</option> 
+	           <option value="BORSE">Borse</option> 
+	           <option value="INTIMO">Intimo</option> 
+	        </select>
+	        
+	          
+	        
+<!--  BARRA DI RICERCA -->
+	        
+	    <div class="input-group">
+     
+        <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="ricerca" id="ricerca" role="combobox">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit" value="Cerca" style="width:50px; height:34px">
+                <i class="glyphicon glyphicon-search"></i></button>
+            </div>
         </div>
+        </form>
+       
+	    </form>
+ 	</div>
+</div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="contatti.jsp">Contatti<span class="sr-only">(current)</span></a></li>
-            <li class="active"><a href="listaProdottiInOfferta">Offerte<span class="sr-only">(current)</span></a></li>
-            <li class="dropdown">
-            
-            <!--  MENU A TENDINA CATEGORIE -->
-            
-            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown">Tutte le categorie<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-            <li><a value="search-alias=ABBIGLIAMENTO">Abbigliamento</a></li>
-            <li><a href="listaProdottiPerCategoria">Casa</a></li>
-            <li><a href="listaProdottiPerCategoria">Elettronica</a></li>
-            <li><a href="listaProdottiPerCategoria">Libri</a></li>
-            <li><a href="listaProdottiPerCategoria">Sport</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="listaProdottiPerCategoria.jsp">Guarda Tutto</a></li>
-            </ul>
-            </li>
-                        
-            
-        <!--  BARRA DI RICERCA -->
-        
-          <form class="navbar-form navbar-left form-horizontal" role="search">
-              <div class="input-group">
-                 <input type="text" class="search-box" placeholder="Search">
-                 <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
-              </div>
-          </form>   
-          
-          
-          
-          
- 
- <!-- L'UTENTE STA EFFETTUANDO IL LOGIN QUINDI QUESTA PARTE SOTTO è DA RIVEDERE! -->
- 
-
- 
-              <% if (utenteLoggato == null) { %>
-              <li class="nav navbar-nav">
-          	   <a href="login.jsp" class="collapse navbar-collapse">Accedi<span class="sr-only"></span></a>
-          	   <% } else { %>
-              <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Il mio account<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="myAccount.jsp">il mio profilo</a></li>
-                <li><a href="listaAcquisti.jsp">i miei acquisti</a></li>
-                <li><a href="listaOrdini.jsp">i miei ordini</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="logout">logout</a></li> 
-              </ul>
-              <li class="dropdown">
-              <li class="active"><a href="listaCarrello.jsp">Il mio carrello<span class="sr-only">(current)</span></a></li>
+    </ul>
+    
+    <!-- LATO DESTRO -->
+    
+    
+    <ul class="nav navbar-nav navbar-right">
+    <% if (utenteLoggato == null) { %>
+      <li><a href="login.jsp"class="collapse navbar-collapse">Accedi <span class="glyphicon glyphicon-user"></span></a></li>
+       <% } else { %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Il mio account<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+         <li><a href="myAccount.jsp">il mio profilo</a></li>
+         <li><a href="listaAcquisti.jsp">i miei acquisti</a></li>
+         <li><a href="listaOrdini.jsp">i miei ordini</a></li>
+         <li role="separator" class="divider"></li>
+         <li><a href="logout">logout</a></li> 
+         </ul>
+         <li class="dropdown">
+         <li class="active"><a href="listaCarrello.jsp">Il mio carrello<span class="sr-only">(current)</span></a></li>
              
              </li>
            <% } %>
@@ -96,7 +109,9 @@
       
         
     </nav>
+    
     <!----------- !Navbar End ------------>
+    
 <div class="container">
 
 <!-- HEADER -->

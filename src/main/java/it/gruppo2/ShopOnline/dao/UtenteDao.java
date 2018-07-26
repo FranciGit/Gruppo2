@@ -8,5 +8,8 @@ public interface UtenteDao {
 	
 	public Utente getUtenteByUsernameAndPassword(String username, String password);
 	
+	public void updateUtente(int idUtente, String nome, String cognome,
+			String username, String password, String indirizzo);
+	
 	public void close();	
 }

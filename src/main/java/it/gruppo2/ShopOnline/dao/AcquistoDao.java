@@ -3,6 +3,7 @@ package it.gruppo2.ShopOnline.dao;
 import java.util.List;
 
 import it.gruppo2.ShopOnline.model.Acquisto;
+import it.gruppo2.ShopOnline.model.Prodotto;
 
 public interface AcquistoDao {
 	

@@ -43,7 +43,6 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				prodotto.setSconto(rs.getInt(7));
 				prodotto.setQuantitaDisponibile(rs.getInt(8));
 				prodotto.setImmagine(rs.getString(9));
-				prodotto.setParoleChiave(rs.getString(10));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -83,7 +82,6 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				prodotto.setSconto(resultSet.getInt(7));
 				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
 				prodotto.setImmagine(resultSet.getString(9));
-				prodotto.setParoleChiave(resultSet.getString(10));
 				listaProdotti.add(prodotto);
 			}
 		} catch (SQLException e) {
@@ -105,12 +103,12 @@ public class ProdottoDaoImpl implements ProdottoDao{
 
 	
 	@Override
-	public void updateQuantita(int quantitaDisponibile, int idProdotto) {
+	public void updateQuantita(int quantitaAggiornata, int idProdotto) {
 		String query = "update prodotto set quantita_disponibile = ?"
 				+ " where id_prodotto = ?";
 		try {
 			prepared = connection.prepareStatement(query);
-			prepared.setInt(1, quantitaDisponibile);
+			prepared.setInt(1, quantitaAggiornata);
 			prepared.setInt(2, idProdotto);
 			prepared.executeQuery();
 		} catch (SQLException e) {
@@ -147,7 +145,6 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				prodotto.setSconto(resultSet.getInt(7));
 				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
 				prodotto.setImmagine(resultSet.getString(9));
-				prodotto.setParoleChiave(resultSet.getString(10));
 				listaProdottiInOfferta.add(prodotto);
 			}
 		} catch (SQLException e) {
@@ -188,7 +185,6 @@ public class ProdottoDaoImpl implements ProdottoDao{
 				prodotto.setSconto(resultSet.getInt(7));
 				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
 				prodotto.setImmagine(resultSet.getString(9));
-				prodotto.setParoleChiave(resultSet.getString(10));
 				listaProdottiPerCategoria.add(prodotto);
 			}
 		} catch (SQLException e) {
@@ -208,36 +204,98 @@ public class ProdottoDaoImpl implements ProdottoDao{
 		return listaProdottiPerCategoria;
 	}
 	
+	
 	@Override
-	public List<Prodotto> getProdottiByRicerca(String paroleRicercate) {
-		List<Prodotto> listaProdottiRicercati = new ArrayList<>();
-		String query = "select * from prodotto where parole_chiave like '%?%'";
+	public List<Prodotto> getProdottiByRicerca(String ricerca, String categoria) {
+		List<Prodotto> listaProdottiRicerca = new ArrayList<>();
+		String query = null;
+		if (categoria.equals("TUTTE")) {
+			query = "select * from prodotto where (nome like '%" + ricerca + "%'"
+					+ " or marca like '%" + ricerca + "%')"
+					+ " and quantita_disponibile > 0";
+		} else {
+			query = "select * from prodotto where (nome like '%" + ricerca + "%'"
+					+ " or marca like '%" + ricerca + "%')"
+					+ " and categoria = ? and quantita_disponibile > 0";
+		}
 		ResultSet rs = null;
 		try {
 			prepared = connection.prepareStatement(query);
-			prepared.setString(1, paroleRicercate);
+			if (!categoria.equals("TUTTE")) {
+			prepared.setString(1, categoria);
+			}
 			rs = prepared.executeQuery();
 			while (rs.next()) {
 				Prodotto prodotto = new Prodotto();
 				prodotto.setIdProdotto(rs.getInt(1));
-				prodotto.setNome(rs.getString(2));
-				Categoria categoria = Categoria.valueOf(rs.getString(3));
-				prodotto.setCategoria(categoria);
+				prodotto.setNome(rs.getString(2));				
+				prodotto.setCategoria(Categoria.valueOf(rs.getString(3)));
 				prodotto.setMarca(rs.getString(4));
 				prodotto.setPrezzo(rs.getDouble(5));
 				prodotto.setOfferta(rs.getBoolean(6));
 				prodotto.setSconto(rs.getInt(7));
 				prodotto.setQuantitaDisponibile(rs.getInt(8));
 				prodotto.setImmagine(rs.getString(9));
-				prodotto.setParoleChiave(rs.getString(10));
-				listaProdottiRicercati.add(prodotto);
+				listaProdottiRicerca.add(prodotto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (prepared != null) {
+					prepared.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		return listaProdottiRicercati;
+		return listaProdottiRicerca;
 	}
 	
+	@Override
+	public List<Prodotto> getTreProdottiPiuVenduti() {
+		List<Prodotto> listaProdottiPiuVenduti = new ArrayList<>();
+		String query = "select * from prodotto where quantita_disponibile > 0 and id_prodotto in"
+				+ " (select id_prodotto from acquisto group by id_prodotto"
+				+ " order by count(quantita_acquistata) desc fetch first 3 rows only)";
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				Prodotto prodotto = new Prodotto();
+				prodotto.setIdProdotto(resultSet.getInt(1));
+				prodotto.setNome(resultSet.getString(2));
+				Categoria categoria = Categoria.valueOf(resultSet.getString(3));
+				prodotto.setCategoria(categoria);
+				prodotto.setMarca(resultSet.getString(4));
+				prodotto.setPrezzo(resultSet.getDouble(5));
+				prodotto.setOfferta(resultSet.getBoolean(6));
+				prodotto.setSconto(resultSet.getInt(7));
+				prodotto.setQuantitaDisponibile(resultSet.getInt(8));
+				prodotto.setImmagine(resultSet.getString(9));
+				listaProdottiPiuVenduti.add(prodotto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return listaProdottiPiuVenduti;
+	}
+
 	@Override
 	public void close() {
 		if (connection != null) {
@@ -249,5 +307,6 @@ public class ProdottoDaoImpl implements ProdottoDao{
 		}		
 	}
 
+	
 
 }

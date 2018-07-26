@@ -57,28 +57,37 @@ public class Acquista extends HttpServlet {
 		
 		ProdottoDaoImpl prodottoService = new ProdottoDaoImpl();
 		Prodotto prodotto = prodottoService.getProdottoById(idProdotto);
+		req.setAttribute("prodotto", prodotto);
 		double prezzoProdotto =	prodotto.calcoloPrezzoProdotto
 				(prodotto.getPrezzo(), prodotto.getSconto(), prodotto.isOfferta());
 		
 		Acquisto acquisto = new Acquisto(tipoSpedizione, dataInizio, dataFine,
 				quantitaAcquistata, idUtente, idProdotto);				
 		acquisto.calcolaPrezzo(prezzoProdotto, quantitaAcquistata);
-		System.out.println(acquisto);
 		
-		int quantitaDiminuita =
+		
+		int quantitaAggiornata =
 				prodotto.getQuantitaDisponibile() - quantitaAcquistata;
-		prodottoService.updateQuantita(quantitaDiminuita, idProdotto);
-		System.out.println("quantità aggiornata: " + quantitaDiminuita);
+		prodottoService.updateQuantita(quantitaAggiornata, idProdotto);
+		System.out.println("quantità aggiornata: " + quantitaAggiornata);
 		prodottoService.close();
 		
 		//ACQUISTO
 		AcquistoDaoImpl acquistoService = new AcquistoDaoImpl();
-		acquistoService.insertAcquisto(acquisto);
-		System.out.println("Acquisto inserito");
-		acquistoService.close();
-	
-		req.setAttribute("acquisto", acquisto);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("riepilogoAcquisto.jsp");
-		dispatcher.forward(req, resp);
+		if (quantitaAggiornata < 0) {
+			System.out.println("Acquisto negato: scorte esaurite");
+			req.setAttribute("acquistoNegato", 1);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("acquistoProdotto.jsp");
+			dispatcher.forward(req, resp);
+		} else {
+			acquistoService.insertAcquisto(acquisto);
+			System.out.println("Acquisto inserito");
+			System.out.println(acquisto);
+			acquistoService.close();
+			req.setAttribute("acquisto", acquisto);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("riepilogoAcquisto.jsp");
+			dispatcher.forward(req, resp);
+		}
+		
 	}
 }

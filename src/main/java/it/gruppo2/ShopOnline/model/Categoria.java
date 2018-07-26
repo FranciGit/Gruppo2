@@ -2,11 +2,11 @@ package it.gruppo2.ShopOnline.model;
 
 public enum Categoria {
 	
-	ABBIGLIAMENTO(1),
-	CASA(2),
-	ELETTRONICA(3),
-	LIBRI(4),
-	SPORT(5);
+	CAMICIE(1),
+	GONNE(2),
+	SCARPE(3),
+	BORSE(4),
+	INTIMO(5);
 	
 	private int numeroCategoria;
 	

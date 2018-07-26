@@ -6,6 +6,7 @@ public class Recensioni {
 	private String contenuto;
 	private int idUtente;
 	private int idProdotto;
+	
 	public String getTitolo() {
 		return titolo;
 	}

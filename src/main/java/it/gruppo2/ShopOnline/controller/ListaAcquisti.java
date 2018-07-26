@@ -33,12 +33,13 @@ public class ListaAcquisti extends HttpServlet {
 		Utente utente = (Utente) sessione.getAttribute("utenteLoggato");
 		int idUtente = utente.getIdUtente();
 		listaAcquisti = acquistoService.getAllAcquistiByUtente(idUtente);
+		System.out.println("Lista acquisti: ");
 		for (Acquisto acquisto : listaAcquisti) {
-			System.out.println("prodotto acquistato");
 			System.out.println(acquisto);
 		}
 		acquistoService.close();
 		req.setAttribute("listaAcquisti", listaAcquisti);
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("listaAcquisti.jsp");
 		dispatcher.forward(req, resp);
 	}

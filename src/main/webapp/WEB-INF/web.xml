@@ -4,6 +4,10 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
  
   <display-name>SHOOOOOP</display-name>
   
+  <welcome-file-list>  
+   <welcome-file>prodottiPiuVenduti</welcome-file>  
+   </welcome-file-list> 
+  
   <!-- LOGIN -->
    <servlet>
   <servlet-name>Login</servlet-name>
@@ -22,6 +26,16 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   <servlet-mapping>
   <servlet-name>Registrazione</servlet-name>
   <url-pattern>/registrazione</url-pattern>
+  </servlet-mapping>
+  
+    <!-- MODIFICA CREDENZIALI -->
+   <servlet>
+  <servlet-name>ModificaCredenziali</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.ModificaCredenziali</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>ModificaCredenziali</servlet-name>
+  <url-pattern>/modificaCredenziali</url-pattern>
   </servlet-mapping>
   
   <!-- LOGOUT -->
@@ -124,6 +138,35 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
   <url-pattern>/myAccount</url-pattern>
   </servlet-mapping>
   
+  <!-- RIMUOVI PRODOTTO DAL CARRELLO -->
+   <servlet>
+  <servlet-name>RimuoviProdottoDalCarrello</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.RimuoviProdottoDalCarrello</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>RimuoviProdottoDalCarrello</servlet-name>
+  <url-pattern>/rimuoviProdottoDalCarrello</url-pattern>
+  </servlet-mapping>
+  
+   <!-- AGGIUNGI RECENSIONE -->
+   <servlet>
+  <servlet-name>AggiungiRecensione</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.AggiungiRecensione</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>AggiungiRecensione</servlet-name>
+  <url-pattern>/aggiungiRecensione</url-pattern>
+  </servlet-mapping>
+  
+    <!-- PRODOTTI PIU VENDUTI -->
+   <servlet>
+  <servlet-name>ProdottiPiuVenduti</servlet-name>
+  <servlet-class>it.gruppo2.ShopOnline.controller.ProdottiPiuVenduti</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>ProdottiPiuVenduti</servlet-name>
+  <url-pattern>/prodottiPiuVenduti</url-pattern>
+  </servlet-mapping>
 
   
 </web-app>

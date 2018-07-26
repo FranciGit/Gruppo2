@@ -20,16 +20,111 @@
 I DETTAGLI DELL'ACQUISTO -->
 <!-- RIMANDERà ALLA LISTA DEGLI ORDINI IN CORSO -  -->
 
-<% Utente utente = (Utente) session.getAttribute("utenteLoggato"); %>
+<% Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato"); %>
 <% Prodotto prodotto = (Prodotto) request.getAttribute("prodotto"); %>
 <% Acquisto acquisto = (Acquisto) request.getAttribute("acquisto");%>
+<% Object acquistoNegato = request.getAttribute("acquistoNegato"); %>
 
+<!------------- NAVBAR -------------->
 
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="index.jsp" rel="home" href="index.jsp" title="Il nostro shop"><img class="img-responsive logo" 
+    src="https://nextindustry.net/wp-content/uploads/2018/01/Logo_TV_2015.png"  alt="logo" style="width:50px"></a>
+    
+  </div>
+
+  <!-- CONTATTI E OFFERTE-->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li><a href="contatti.jsp">Contatti</a></li>
+      <li><a href="listaProdottiInOfferta">Offerte</a></li>
+      
+      
+      
+  <!-- RICERCA PER CATEGORIE-->    
+  
+  <div class="input-group">
+	<div class="row">
+	    <form name="categoria"  class="navbar-form navbar-left form-horizontal"
+            id="search-box" action ="listaProdottiPerCategoria" method="get">
+	        
+	        <select class="form-control" name="categoria">	         
+	           <option value="Tutte">
+	           	Tutte le categorie</option><span class="caret"></span> 
+	           <option value="CAMICIE">Camicie</option> 
+	           <option value="GONNE">Gonne</option> 
+	           <option value="SCARPE">Scarpe</option> 
+	           <option value="BORSE">Borse</option> 
+	           <option value="INTIMO">Intimo</option> 
+	        </select>
+	        
+	          
+	        
+<!--  BARRA DI RICERCA -->
+	        
+	    <div class="input-group">
+     
+        <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="ricerca" id="ricerca" role="combobox">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit" value="Cerca" style="width:50px; height:34px">
+                <i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form>
+       
+	    </form>
+ 	</div>
+</div>
+
+    </ul>
+    
+    
+    <!-- LATO DESTRO -->
+    
+    
+    <ul class="nav navbar-nav navbar-right">
+    <% if (utenteLoggato == null) { %>
+      <li><a href="login.jsp"class="collapse navbar-collapse">Accedi <span class="glyphicon glyphicon-user"></span></a></li>
+       <% } else { %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Il mio account<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+         <li><a href="myAccount.jsp">il mio profilo</a></li>
+         <li><a href="listaAcquisti.jsp">i miei acquisti</a></li>
+         <li><a href="listaOrdini.jsp">i miei ordini</a></li>
+         <li role="separator" class="divider"></li>
+         <li><a href="logout">logout</a></li> 
+         </ul>
+         <li class="dropdown">
+         <li class="active"><a href="listaCarrello.jsp">Il mio carrello<span class="sr-only">(current)</span></a></li>
+             
+             </li>
+           <% } %>
+            </li>
+            
+          
+        </div>
+      
+        
+    </nav>
+    
+     <!----------- !Navbar End ------------>
+        
 <!-- container -->
 <div class "container">
 <div class="page-header">
 <h1>Procedi all'acquisto</h1>
-<h3>(Immagine)</h3>
+<h3> <img src="<%=prodotto.getImmagine()%>"></h3>
 <h3><%=prodotto.getNome()%></h3>
 <h3><%=prodotto.getMarca()%></h3>
 
@@ -45,15 +140,18 @@ Se invece il prodotto non è scontato viene mostrato solo il prezzo normale -->
 </span>
 <% } %>
 <!-- se rimangono pochi articoli nelle scorte, faccio comparire questo, altrimenti nulla -->
-<% if (prodotto.getQuantitaDisponibile() <= 5 && prodotto.getQuantitaDisponibile() > 0) { %>
+<% if (prodotto.getQuantitaDisponibile() <= 5 && prodotto.getQuantitaDisponibile() > 1) { %>
 <h3>Solo <%=prodotto.getQuantitaDisponibile()%> articoli ancora disponibili. Affrettati!</h3>
+<% } %>
+<% if (prodotto.getQuantitaDisponibile() == 1) { %>
+<h3>Solo <%=prodotto.getQuantitaDisponibile()%> articolo ancora disponibile. Affrettati!</h3>
 <% } %>
 
 </div> <!-- CHIUDE L'INTESTAZIONE -->
 
 
 <!-- FORM -->
-<form action="acquista" method="post" class="form horizontal"> 
+<form action="acquista" method="post" class="form horizontal" onsubmit="return controlloQuantita()"> 
 
 <!--HIDDEN sui parametri che dovrò recuperare nella servlet: -->
 
@@ -62,6 +160,7 @@ Se invece il prodotto non è scontato viene mostrato solo il prezzo normale -->
 <input type="hidden" name="offerta" value="<%=prodotto.isOfferta()%>">
 <input type="hidden" name="sconto" value="<%=prodotto.getSconto()%>">
 <input type="hidden" name="prezzo" value="<%=prodotto.getPrezzo()%>">
+<input type="hidden" name="quantitaDisponibile" value="<%=prodotto.getQuantitaDisponibile() %>">
 <!-- IMMAGINE?? -->
 
 <!-- FORM per scegliere: tipoSpedizione e quantità -->
@@ -88,7 +187,7 @@ Standard - Entro 2/3 giorni lavorativi
 
 <div class="form-group">
 <span>
-<label for="quantita" class="control-label col-md-4">Quantità:</label>
+<label for="quantita" class="control-label col-md-4">Quantità desiderata:</label>
 <div class="col-md-7" style="font-size: 20px">
 <select name="quantita" id="quantita">
 <option value="1">1</option>
@@ -115,6 +214,19 @@ Standard - Entro 2/3 giorni lavorativi
 <span class="col-md-3"></span>
 </div>
 </form>
+
+
+
+<!-- ALERT -->
+<div class="alert alert-danger" id="alert" style="display: none">
+<p class="text-center">Scorte esaurite</p>
+</div>
+
+<%if (acquistoNegato != null) { %>
+<div class="alert alert-danger">
+<p class="text-center">Prodotto momentaneamente non disponibile. Ci dispiace!</p>
+</div>
+<% } %>
 
 
 </div> <!-- chiude container -->

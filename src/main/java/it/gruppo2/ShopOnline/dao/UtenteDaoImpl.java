@@ -62,7 +62,6 @@ public class UtenteDaoImpl implements UtenteDao {
 				utente.setUsername(username);
 				utente.setPassword(password);
 				utente.setIndirizzo(resultSet.getString(6));
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -77,6 +76,33 @@ public class UtenteDaoImpl implements UtenteDao {
 		}
 		return utente;
 	}
+	
+	@Override
+	public void updateUtente(int idUtente, String nome, String cognome,
+			String username, String password, String indirizzo) {
+		String query = "update utente set nome = ?, cognome = ?, username = ?,"
+				+ " password = ?, indirizzo = ? where id_utente = ?";
+		try {
+			prepared = connection.prepareStatement(query);
+			prepared.setString(1, nome);
+			prepared.setString(2, cognome);
+			prepared.setString(3, username);
+			prepared.setString(4, password);
+			prepared.setString(5, indirizzo);
+			prepared.setInt(6, idUtente);
+			prepared.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (prepared != null) {
+				try {
+					prepared.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	public void close() {
 		if (connection != null){
@@ -84,7 +110,7 @@ public class UtenteDaoImpl implements UtenteDao {
 				connection.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
+			} 
 		}
 	}
 
